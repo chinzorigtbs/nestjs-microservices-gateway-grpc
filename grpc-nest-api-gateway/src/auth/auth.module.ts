@@ -15,7 +15,7 @@ import { AUTH_PACKAGE_NAME, AUTH_SERVICE_NAME } from './auth.pb';
           url: '0.0.0.0:50051',
           package: AUTH_PACKAGE_NAME,
           protoPath:
-            'node_modules/nestsjs-microservices-gateway-grpc/proto/auth.proto',
+            'node_modules/nestjs-microservices-gateway-grpc/proto/auth.proto',
         },
       },
     ]),

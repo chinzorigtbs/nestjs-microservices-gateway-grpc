@@ -13,7 +13,7 @@ import { PRODUCT_PACKAGE_NAME, PRODUCT_SERVICE_NAME } from './product.pb';
           url: '0.0.0.0:50053',
           package: PRODUCT_PACKAGE_NAME,
           protoPath:
-            'node_modules/nestsjs-microservices-gateway-grpc/proto/product.proto',
+            'node_modules/nestjs-microservices-gateway-grpc/proto/product.proto',
         },
       },
     ]),

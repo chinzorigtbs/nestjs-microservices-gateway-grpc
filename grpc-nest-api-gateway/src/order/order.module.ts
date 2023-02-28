@@ -13,7 +13,7 @@ import { ORDER_PACKAGE_NAME, ORDER_SERVICE_NAME } from './order.pb';
           url: '0.0.0.0:50052',
           package: ORDER_PACKAGE_NAME,
           protoPath:
-            'node_modules/nestsjs-microservices-gateway-grpc/proto/order.proto',
+            'node_modules/nestjs-microservices-gateway-grpc/proto/order.proto',
         },
       },
     ]),
