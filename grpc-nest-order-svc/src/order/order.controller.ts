@@ -6,8 +6,7 @@ import { CreateOrderRequestDto } from './order.dto';
 
 @Controller('order')
 export class OrderController {
-  @Inject(OrderService)
-  private readonly service: OrderService;
+  constructor(@Inject(OrderService) private readonly service: OrderService) {}
 
   @GrpcMethod(ORDER_SERVICE_NAME, 'CreateOrder')
   private async createOrder(

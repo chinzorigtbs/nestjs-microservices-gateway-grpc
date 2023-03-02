@@ -12,11 +12,10 @@ import {
 
 @Injectable()
 export class AuthService {
-  @InjectRepository(Auth)
-  private readonly repository: Repository<Auth>;
-
-  @Inject(JwtService)
-  private readonly jwtService: JwtService;
+  constructor(
+    @InjectRepository(Auth) private readonly repository: Repository<Auth>,
+    @Inject(JwtService) private readonly jwtService: JwtService,
+  ) {}
 
   public async register({
     email,

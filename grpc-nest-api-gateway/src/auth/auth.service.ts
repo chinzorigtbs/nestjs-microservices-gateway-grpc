@@ -9,16 +9,15 @@ import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class AuthService {
-  private svc: AuthServiceClient;
+  private service: AuthServiceClient;
 
-  @Inject(AUTH_SERVICE_NAME)
-  private readonly client: ClientGrpc;
+  constructor(@Inject(AUTH_SERVICE_NAME) private readonly client: ClientGrpc) {}
 
-  public onModuleInit(): void {
-    this.svc = this.client.getService<AuthServiceClient>(AUTH_SERVICE_NAME);
+  onModuleInit(): void {
+    this.service = this.client.getService<AuthServiceClient>(AUTH_SERVICE_NAME);
   }
 
   public async validate(token: string): Promise<ValidateResponse> {
-    return firstValueFrom(this.svc.validate({ token }));
+    return firstValueFrom(this.service.validate({ token }));
   }
 }

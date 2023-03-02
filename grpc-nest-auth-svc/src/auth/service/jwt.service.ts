@@ -7,14 +7,11 @@ import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class JwtService {
-  @InjectRepository(Auth)
-  private readonly repository: Repository<Auth>;
-
-  private readonly jwt: Jwt;
-
-  constructor(jwt: Jwt) {
-    this.jwt = jwt;
-  }
+  constructor(
+    @InjectRepository(Auth)
+    private readonly repository: Repository<Auth>,
+    private readonly jwt: Jwt,
+  ) {}
 
   public async decode(token: string): Promise<unknown> {
     return this.jwt.decode(token, null);
@@ -45,6 +42,7 @@ export class JwtService {
     try {
       return this.jwt.verify(token);
     } catch (err) {
+      //TODO add logger
       console.log('Error occured: \n' + err);
     }
   }

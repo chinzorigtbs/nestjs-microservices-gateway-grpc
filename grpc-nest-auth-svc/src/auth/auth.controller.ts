@@ -15,8 +15,7 @@ import {
 
 @Controller('auth')
 export class AuthController {
-  @Inject(AuthService)
-  private readonly svc: AuthService;
+  constructor(@Inject(AuthService) private readonly svc: AuthService) {}
 
   @GrpcMethod(AUTH_SERVICE_NAME, 'Register')
   private register(payload: RegisterRequestDto): Promise<RegisterResponse> {

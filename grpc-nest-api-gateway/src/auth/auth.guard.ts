@@ -12,8 +12,7 @@ import { Request } from 'express';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  @Inject(AuthService)
-  public readonly service: AuthService;
+  constructor(@Inject(AuthService) public readonly service: AuthService) {}
 
   public async canActivate(
     context: ExecutionContext,

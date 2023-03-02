@@ -15,8 +15,9 @@ import {
 
 @Controller('product')
 export class ProductController {
-  @Inject(ProductService)
-  private readonly service: ProductService;
+  constructor(
+    @Inject(ProductService) private readonly service: ProductService,
+  ) {}
 
   @GrpcMethod(PRODUCT_SERVICE_NAME, 'CreateProduct')
   private createProduct(

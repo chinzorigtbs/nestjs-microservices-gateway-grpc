@@ -22,13 +22,14 @@ import { Observable } from 'rxjs';
 
 @Controller('product')
 export class ProductController implements OnModuleInit {
-  private svc: ProductServiceClient;
+  private service: ProductServiceClient;
 
-  @Inject(PRODUCT_SERVICE_NAME)
-  private readonly client: ClientGrpc;
+  constructor(
+    @Inject(PRODUCT_SERVICE_NAME) private readonly client: ClientGrpc,
+  ) {}
 
-  public onModuleInit(): void {
-    this.svc =
+  onModuleInit(): void {
+    this.service =
       this.client.getService<ProductServiceClient>(PRODUCT_SERVICE_NAME);
   }
 
@@ -37,7 +38,7 @@ export class ProductController implements OnModuleInit {
   private async createProduct(
     @Body() body: CreateProductRequest,
   ): Promise<Observable<CreateProductResponse>> {
-    return this.svc.createProduct(body);
+    return this.service.createProduct(body);
   }
 
   @Get(':id')
@@ -45,6 +46,6 @@ export class ProductController implements OnModuleInit {
   private async findOne(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<Observable<FindOneResponse>> {
-    return this.svc.findOne({ id });
+    return this.service.findOne({ id });
   }
 }

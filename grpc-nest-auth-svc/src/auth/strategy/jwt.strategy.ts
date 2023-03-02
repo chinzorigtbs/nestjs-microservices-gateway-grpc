@@ -6,10 +6,7 @@ import { Auth } from '../auth.entity';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  @Inject(JwtService)
-  private readonly jwtService: JwtService;
-
-  constructor() {
+  constructor(@Inject(JwtService) private readonly jwtService: JwtService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: 'dev',

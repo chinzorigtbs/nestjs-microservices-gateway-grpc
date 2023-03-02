@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install":"cd grpc-nest-api-gateway && npm i && cd ../grpc-nest-auth-svc && npm i && cd ../grpc-nest-order-svc && npm i && cd ../grpc-nest-product-svc && npm i"
   },
   "keywords": [],
   "author": "",

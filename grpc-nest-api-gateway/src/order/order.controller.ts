@@ -20,10 +20,11 @@ import { Observable } from 'rxjs';
 export class OrderController implements OnModuleInit {
   private svc: OrderServiceClient;
 
-  @Inject(ORDER_SERVICE_NAME)
-  private readonly client: ClientGrpc;
+  constructor(
+    @Inject(ORDER_SERVICE_NAME) private readonly client: ClientGrpc,
+  ) {}
 
-  public onModuleInit(): void {
+  onModuleInit(): void {
     this.svc = this.client.getService<OrderServiceClient>(ORDER_SERVICE_NAME);
   }
 

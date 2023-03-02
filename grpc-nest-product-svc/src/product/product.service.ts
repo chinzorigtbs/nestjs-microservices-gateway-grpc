@@ -16,11 +16,12 @@ import {
 
 @Injectable()
 export class ProductService {
-  @InjectRepository(Product)
-  private readonly repository: Repository<Product>;
-
-  @InjectRepository(StockDecreaseLog)
-  private readonly decreaseLogRepository: Repository<StockDecreaseLog>;
+  constructor(
+    @InjectRepository(Product)
+    private readonly repository: Repository<Product>,
+    @InjectRepository(StockDecreaseLog)
+    private readonly decreaseLogRepository: Repository<StockDecreaseLog>,
+  ) {}
 
   public async findOne({ id }: FindOneRequestDto): Promise<FindOneResponse> {
     const product: Product = await this.repository.findOne({ where: { id } });
