@@ -19,10 +19,12 @@ import {
 import { ClientGrpc } from '@nestjs/microservices';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Observable } from 'rxjs';
+import { Log } from 'src/app.module';
 
 @Controller('product')
 export class ProductController implements OnModuleInit {
   private service: ProductServiceClient;
+  private readonly logger: Log = new Log();
 
   constructor(
     @Inject(PRODUCT_SERVICE_NAME) private readonly client: ClientGrpc,
@@ -38,6 +40,7 @@ export class ProductController implements OnModuleInit {
   private async createProduct(
     @Body() body: CreateProductRequest,
   ): Promise<Observable<CreateProductResponse>> {
+    this.logger.debug('CreateProductRequest', body);
     return this.service.createProduct(body);
   }
 
@@ -46,6 +49,7 @@ export class ProductController implements OnModuleInit {
   private async findOne(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<Observable<FindOneResponse>> {
+    this.logger.debug('FindOneRequest', id);
     return this.service.findOne({ id });
   }
 }

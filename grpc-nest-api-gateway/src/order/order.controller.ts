@@ -15,17 +15,20 @@ import {
 import { ClientGrpc } from '@nestjs/microservices';
 import { AuthGuard, IRequest } from 'src/auth/auth.guard';
 import { Observable } from 'rxjs';
+import { Log } from 'src/app.module';
 
 @Controller('order')
 export class OrderController implements OnModuleInit {
-  private svc: OrderServiceClient;
+  private service: OrderServiceClient;
+  private readonly logger: Log = new Log(OrderController.name);
 
   constructor(
     @Inject(ORDER_SERVICE_NAME) private readonly client: ClientGrpc,
   ) {}
 
   onModuleInit(): void {
-    this.svc = this.client.getService<OrderServiceClient>(ORDER_SERVICE_NAME);
+    this.service =
+      this.client.getService<OrderServiceClient>(ORDER_SERVICE_NAME);
   }
 
   @Post()
@@ -37,6 +40,7 @@ export class OrderController implements OnModuleInit {
 
     body.userId = <number>req.user;
 
-    return this.svc.createOrder(body);
+    this.logger.debug('CreateOrderRequest', body);
+    return this.service.createOrder(body);
   }
 }

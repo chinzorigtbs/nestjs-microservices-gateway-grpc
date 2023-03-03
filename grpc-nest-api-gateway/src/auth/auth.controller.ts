@@ -16,10 +16,12 @@ import {
 } from './auth.pb';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
+import { Log } from 'src/app.module';
 
 @Controller('auth')
 export class AuthController implements OnModuleInit {
   private service: AuthServiceClient;
+  private readonly logger: Log = new Log(AuthController.name);
 
   constructor(@Inject(AUTH_SERVICE_NAME) private readonly client: ClientGrpc) {}
 
@@ -31,6 +33,7 @@ export class AuthController implements OnModuleInit {
   private async register(
     @Body() body: RegisterRequest,
   ): Promise<Observable<RegisterResponse>> {
+    this.logger.debug('RegisterRequest', body);
     return this.service.register(body);
   }
 
@@ -38,6 +41,7 @@ export class AuthController implements OnModuleInit {
   private async login(
     @Body() body: LoginRequest,
   ): Promise<Observable<LoginResponse>> {
+    this.logger.debug('LoginRequest', body);
     return this.service.login(body);
   }
 }
