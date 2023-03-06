@@ -9,12 +9,14 @@ import {
   RegisterRequestDto,
   ValidateRequestDto,
 } from '../auth.dto';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(Auth) private readonly repository: Repository<Auth>,
     @Inject(JwtService) private readonly jwtService: JwtService,
+    @Inject('USER_SERVICE') private readonly client: ClientProxy,
   ) {}
 
   public async register({
@@ -33,6 +35,8 @@ export class AuthService {
     auth.password = this.jwtService.encodePassword(password);
 
     await this.repository.save(auth);
+
+    this.client.emit('user_created', auth);
 
     return { status: HttpStatus.CREATED, error: null };
   }

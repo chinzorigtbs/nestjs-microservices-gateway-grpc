@@ -4,12 +4,12 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Auth extends BaseEntity {
   @PrimaryGeneratedColumn()
-  public id!: number;
+  id!: number;
 
   @Column({ type: 'varchar' })
-  public email!: string;
+  email!: string;
 
   @Exclude()
   @Column({ type: 'varchar' })
-  public password!: string;
+  password!: string;
 }

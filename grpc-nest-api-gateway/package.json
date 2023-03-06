@@ -22,15 +22,19 @@
     "proto:auth": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/nestjs-microservices-gateway-grpc/proto --ts_proto_out=src/auth/ node_modules/nestjs-microservices-gateway-grpc/proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
     "proto:order": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/nestjs-microservices-gateway-grpc/proto --ts_proto_out=src/order/ node_modules/nestjs-microservices-gateway-grpc/proto/order.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
     "proto:product": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/nestjs-microservices-gateway-grpc/proto --ts_proto_out=src/product/ node_modules/nestjs-microservices-gateway-grpc/proto/product.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
-    "proto:all": "npm run proto:auth && npm run proto:order && npm run proto:product"
+    "proto:health": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/nestjs-microservices-gateway-grpc/proto --ts_proto_out=src/health/ node_modules/nestjs-microservices-gateway-grpc/proto/health.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
+    "proto:all": "npm run proto:auth && npm run proto:order && npm run proto:product && npm run proto:health"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.8.11",
     "@grpc/proto-loader": "^0.7.5",
+    "@nestjs/axios": "^2.0.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/microservices": "^9.3.9",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/terminus": "^9.2.1",
+    "axios": "^1.3.4",
     "nestjs-microservices-gateway-grpc": "github:chinzorigtbs/nestjs-microservices-gateway-grpc",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"

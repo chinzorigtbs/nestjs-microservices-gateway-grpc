@@ -10,23 +10,23 @@ import { StockDecreaseLog } from './stock-decrease-log.entity';
 @Entity()
 export class Product extends BaseEntity {
   @PrimaryGeneratedColumn()
-  public id!: number;
+  id!: number;
 
   @Column({ type: 'varchar' })
-  public name!: string;
+  name!: string;
 
   @Column({ type: 'varchar' })
-  public sku!: string;
+  sku!: string;
 
   @Column({ type: 'integer' })
-  public stock!: number;
+  stock!: number;
 
   @Column({ type: 'decimal', precision: 12, scale: 2 })
-  public price!: number;
+  price!: number;
 
   @OneToMany(
     () => StockDecreaseLog,
     (stockDecreaseLog) => stockDecreaseLog.product,
   )
-  public stockDecreaseLogs: StockDecreaseLog[];
+  stockDecreaseLogs: StockDecreaseLog[];
 }
