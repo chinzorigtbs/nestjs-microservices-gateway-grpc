@@ -6,6 +6,7 @@ service AuthService {
     rpc Register (RegisterRequest) returns (RegisterResponse) {}
     rpc Login (LoginRequest) returns (LoginResponse) {}
     rpc Validate (ValidateRequest) returns (ValidateResponse) {}
+    rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse) {}
 }
 
 // Register
@@ -41,3 +42,18 @@ message ValidateResponse {
     repeated string error = 2;
     int32 userId = 3;
 }
+
+// Health
+message HealthCheckRequest {
+    string service = 1;
+}
+
+message HealthCheckResponse {
+    enum ServingStatus {
+        UNKNOWN = 0;
+        SERVING = 1;
+        DOWN = 2;
+    }
+    ServingStatus status = 1;
+}
+
