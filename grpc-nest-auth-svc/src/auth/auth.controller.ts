@@ -3,6 +3,7 @@ import { AuthService } from './service/auth.service';
 import { GrpcMethod } from '@nestjs/microservices';
 import {
   AUTH_SERVICE_NAME,
+  HealthCheckResponse_ServingStatus,
   LoginResponse,
   RegisterResponse,
   ValidateResponse,
@@ -30,5 +31,10 @@ export class AuthController {
   @GrpcMethod(AUTH_SERVICE_NAME, 'Validate')
   private validate(payload: ValidateRequestDto): Promise<ValidateResponse> {
     return this.svc.validate(payload);
+  }
+
+  @GrpcMethod(AUTH_SERVICE_NAME, 'HealthCheck')
+  private healthCheck() {
+    return { status: HealthCheckResponse_ServingStatus.SERVING };
   }
 }
