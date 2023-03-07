@@ -41,9 +41,8 @@ export class HealthController {
           {
             timeout: 2000,
             package: protobufPackage,
-            url: '0.0.0.0:50051',
-            protoPath:
-              'node_modules/nestjs-microservices-gateway-grpc/proto/auth.proto',
+            url: this.configService.get<string>('AUTH_CLIENT_URL'),
+            protoPath: this.configService.get<string>('AUTH_CLIENT_PROTO_PATH'),
           },
         ),
     ]);

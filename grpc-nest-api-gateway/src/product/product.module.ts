@@ -2,19 +2,23 @@ import { Module } from '@nestjs/common';
 import { ProductController } from './product.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { PRODUCT_PACKAGE_NAME, PRODUCT_SERVICE_NAME } from './product.pb';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
         name: PRODUCT_SERVICE_NAME,
-        transport: Transport.GRPC,
-        options: {
-          url: '0.0.0.0:50053',
-          package: PRODUCT_PACKAGE_NAME,
-          protoPath:
-            'node_modules/nestjs-microservices-gateway-grpc/proto/product.proto',
-        },
+        imports: [ConfigModule],
+        useFactory: async (configService: ConfigService) => ({
+          transport: Transport.GRPC,
+          options: {
+            url: configService.get<string>('PRODUCT_CLIENT_URL'),
+            package: PRODUCT_PACKAGE_NAME,
+            protoPath: configService.get<string>('PRODUCT_CLIENT_PROTO_PATH'),
+          },
+        }),
+        inject: [ConfigService],
       },
     ]),
   ],
