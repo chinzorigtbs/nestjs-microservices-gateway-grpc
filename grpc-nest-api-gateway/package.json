@@ -34,8 +34,10 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/microservices": "^9.3.9",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^6.2.1",
     "@nestjs/terminus": "^9.2.1",
     "axios": "^1.3.4",
+    "class-validator": "^0.14.0",
     "nestjs-microservices-gateway-grpc": "github:chinzorigtbs/nestjs-microservices-gateway-grpc",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"

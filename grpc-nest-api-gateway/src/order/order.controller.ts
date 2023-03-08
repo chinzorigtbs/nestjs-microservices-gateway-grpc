@@ -16,8 +16,15 @@ import { ClientGrpc } from '@nestjs/microservices';
 import { AuthGuard, IRequest } from 'src/auth/auth.guard';
 import { Observable } from 'rxjs';
 import { Log } from 'src/app.module';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @Controller('order')
+@ApiTags('order')
 export class OrderController implements OnModuleInit {
   private service: OrderServiceClient;
   private readonly logger: Log = new Log(OrderController.name);
@@ -31,7 +38,10 @@ export class OrderController implements OnModuleInit {
       this.client.getService<OrderServiceClient>(ORDER_SERVICE_NAME);
   }
 
+  @ApiBearerAuth()
   @Post()
+  @ApiOperation({ summary: 'Create order' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
   @UseGuards(AuthGuard)
   private async createOrder(
     @Req() req: IRequest,

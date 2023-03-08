@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { GrpcOptions } from '@nestjs/microservices';
+import { ApiTags } from '@nestjs/swagger';
 import {
   GRPCHealthIndicator,
   HealthCheck,
@@ -10,6 +11,7 @@ import {
 import { AUTH_SERVICE_NAME, protobufPackage } from 'src/auth/auth.pb';
 
 @Controller('health')
+@ApiTags('health')
 export class HealthController {
   constructor(
     private configService: ConfigService,

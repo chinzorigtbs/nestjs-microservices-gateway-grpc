@@ -7,6 +7,7 @@ import { AuthService } from './service/auth.service';
 import { JwtService } from './service/jwt.service';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -15,17 +16,21 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       signOptions: { expiresIn: '365d' },
     }),
     TypeOrmModule.forFeature([Auth]),
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
         name: 'USER_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: ['amqp://localhost:5672'],
-          queue: 'user_queue',
-          queueOptions: {
-            durable: false,
+        imports: [ConfigModule],
+        useFactory: async (configService: ConfigService) => ({
+          transport: Transport.RMQ,
+          options: {
+            url: configService.get<string>('USER_CLIENT_URL'),
+            queue: configService.get<string>('USER_QUEUE'),
+            queueOptions: {
+              durable: false,
+            },
           },
-        },
+        }),
+        inject: [ConfigService],
       },
     ]),
   ],

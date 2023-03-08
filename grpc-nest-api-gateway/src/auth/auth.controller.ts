@@ -17,8 +17,11 @@ import {
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { Log } from 'src/app.module';
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { LoginRequestDto, RegisterRequestDto } from './auth.dto';
 
 @Controller('auth')
+@ApiTags('auth')
 export class AuthController implements OnModuleInit {
   private service: AuthServiceClient;
   private readonly logger: Log = new Log(AuthController.name);
@@ -30,16 +33,20 @@ export class AuthController implements OnModuleInit {
   }
 
   @Post('register')
+  @ApiOperation({ summary: 'Create user' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
   private async register(
-    @Body() body: RegisterRequest,
+    @Body() body: RegisterRequestDto,
   ): Promise<Observable<RegisterResponse>> {
     this.logger.debug('RegisterRequest', body);
     return this.service.register(body);
   }
 
   @Put('login')
+  @ApiOperation({ summary: 'Login user' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
   private async login(
-    @Body() body: LoginRequest,
+    @Body() body: LoginRequestDto,
   ): Promise<Observable<LoginResponse>> {
     this.logger.debug('LoginRequest', body);
     return this.service.login(body);
