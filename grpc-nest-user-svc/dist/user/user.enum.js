@@ -1,12 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserRole = exports.UserType = void 0;
-var UserType;
-(function (UserType) {
-    UserType["SIGNED"] = "signed";
-    UserType["EASY"] = "easy_onboard";
-    UserType["FULL"] = "full_onboard";
-})(UserType = exports.UserType || (exports.UserType = {}));
+exports.UserRole = void 0;
 var UserRole;
 (function (UserRole) {
     UserRole["ADMIN"] = "admin";

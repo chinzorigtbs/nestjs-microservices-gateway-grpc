@@ -1,10 +1,4 @@
-import {
-  ArgumentsHost,
-  Catch,
-  ExceptionFilter,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import {ArgumentsHost,Catch,ExceptionFilter,HttpException,HttpStatus} from '@nestjs/common';
 import { HttpArgumentsHost } from '@nestjs/common/interfaces';
 import { Request, Response } from 'express';
 
@@ -15,11 +9,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const res: Response = ctx.getResponse<Response>();
     const req: Request = ctx.getRequest<Request>();
     const status: HttpStatus = exception.getStatus();
-
-    if (status === HttpStatus.BAD_REQUEST) {
-      const res: any = exception.getResponse();
-      return { status, error: res.message };
-    }
 
     return res.status(status).json({
       statusCode: status,

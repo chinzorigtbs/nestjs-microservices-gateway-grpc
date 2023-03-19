@@ -5,15 +5,21 @@ import { AuthModule } from './auth/auth.module';
 import { HealthModule } from './health/health.module';
 import { OrderModule } from './order/order.module';
 import { ProductModule } from './product/product.module';
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: new Log(),
   });
 
+  const configService = app.get(ConfigService);
+
   const swaggerConfig = new DocumentBuilder()
     .setTitle('NestJS Microservices')
-    .setDescription('NestJS microservices swagger documentation')
+    .setDescription(
+      'This is the swagger documentation of the NestJS Microservices application.',
+    )
     .setVersion('0.0.1')
     .addBearerAuth()
     .build();
@@ -24,7 +30,11 @@ async function bootstrap() {
   });
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(process.env.GATEWAY_PORT || 3000);
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+
+  await app.listen(configService.get<number>('GATEWAY_PORT') || 3000);
 }
 
 bootstrap();
+
+

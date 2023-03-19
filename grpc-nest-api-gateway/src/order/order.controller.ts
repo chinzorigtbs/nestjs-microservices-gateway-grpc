@@ -24,7 +24,7 @@ import {
 } from '@nestjs/swagger';
 
 @Controller('order')
-@ApiTags('order')
+@ApiTags('order endpoint')
 export class OrderController implements OnModuleInit {
   private service: OrderServiceClient;
   private readonly logger: Log = new Log(OrderController.name);
@@ -40,8 +40,8 @@ export class OrderController implements OnModuleInit {
 
   @ApiBearerAuth()
   @Post()
-  @ApiOperation({ summary: 'Create order' })
-  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiOperation({ summary: 'Create a new order using this endpoint' })
+  @ApiResponse({ status: 200, description: 'Order created' })
   @UseGuards(AuthGuard)
   private async createOrder(
     @Req() req: IRequest,

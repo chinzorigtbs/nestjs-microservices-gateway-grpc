@@ -13,6 +13,7 @@ exports.User = void 0;
 const class_transformer_1 = require("class-transformer");
 const typeorm_1 = require("typeorm");
 const user_enum_1 = require("./user.enum");
+const project_entity_1 = require("./project.entity");
 let User = class User {
 };
 __decorate([
@@ -45,13 +46,13 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "phoneNumber", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'enum', enum: user_enum_1.UserType, default: user_enum_1.UserType.SIGNED }),
-    __metadata("design:type", String)
-], User.prototype, "type", void 0);
-__decorate([
     (0, typeorm_1.Column)({ type: 'enum', enum: user_enum_1.UserRole, default: user_enum_1.UserRole.USER }),
     __metadata("design:type", String)
 ], User.prototype, "role", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => project_entity_1.Project, (project) => project.user),
+    __metadata("design:type", Array)
+], User.prototype, "projects", void 0);
 User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

@@ -1,9 +1,16 @@
-import { ConsoleLogger, Module } from '@nestjs/common';
+import {
+  ConsoleLogger,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
 import { HealthModule } from './health/health.module';
 import { ConfigModule } from '@nestjs/config';
+import { RequestMiddleware } from './request.middleware';
 
 export class Log extends ConsoleLogger {
   debug(message: string, parameter?: any): void {
@@ -20,7 +27,7 @@ export class Log extends ConsoleLogger {
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: ['./.env'] }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: ['./.env.local'] }),
     AuthModule,
     ProductModule,
     OrderModule,
@@ -28,4 +35,10 @@ export class Log extends ConsoleLogger {
   ],
   providers: [Log],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(RequestMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.GET });
+  }
+}

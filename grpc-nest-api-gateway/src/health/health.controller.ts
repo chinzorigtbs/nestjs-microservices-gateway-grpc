@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { GrpcOptions } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
@@ -8,6 +8,7 @@ import {
   HealthCheckService,
   HttpHealthIndicator,
 } from '@nestjs/terminus';
+import { Request } from 'express';
 import { AUTH_SERVICE_NAME, protobufPackage } from 'src/auth/auth.pb';
 
 @Controller('health')
@@ -19,18 +20,6 @@ export class HealthController {
     private http: HttpHealthIndicator,
     private grpc: GRPCHealthIndicator,
   ) {}
-
-  @Get('http')
-  @HealthCheck()
-  checkHttp() {
-    return this.health.check([
-      () =>
-        this.http.pingCheck(
-          'gateway',
-          this.configService.get<string>('HEALTH_HTTP_URL'),
-        ),
-    ]);
-  }
 
   @Get('grpc/auth')
   @HealthCheck()
@@ -46,6 +35,19 @@ export class HealthController {
             url: this.configService.get<string>('AUTH_CLIENT_URL'),
             protoPath: this.configService.get<string>('AUTH_CLIENT_PROTO_PATH'),
           },
+        ),
+    ]);
+  }
+
+  @Get('http')
+  @HealthCheck()
+  checkHttp(@Req() request: Request) {
+    console.log(request.body.requestId);
+    return this.health.check([
+      () =>
+        this.http.pingCheck(
+          'gateway',
+          this.configService.get<string>('HEALTH_HTTP_URL'),
         ),
     ]);
   }

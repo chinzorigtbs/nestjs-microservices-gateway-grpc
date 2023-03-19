@@ -21,7 +21,7 @@ import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LoginRequestDto, RegisterRequestDto } from './auth.dto';
 
 @Controller('auth')
-@ApiTags('auth')
+@ApiTags('auth endpoint')
 export class AuthController implements OnModuleInit {
   private service: AuthServiceClient;
   private readonly logger: Log = new Log(AuthController.name);
@@ -33,8 +33,10 @@ export class AuthController implements OnModuleInit {
   }
 
   @Post('register')
-  @ApiOperation({ summary: 'Create user' })
-  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiOperation({
+    summary: 'This operation lets you create a user in our application',
+  })
+  @ApiResponse({ status: 200 })
   private async register(
     @Body() body: RegisterRequestDto,
   ): Promise<Observable<RegisterResponse>> {
@@ -43,8 +45,10 @@ export class AuthController implements OnModuleInit {
   }
 
   @Put('login')
-  @ApiOperation({ summary: 'Login user' })
-  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiOperation({
+    summary: 'Application users then can log in using this endpoint',
+  })
+  @ApiResponse({ status: 200, description: 'Logged in' })
   private async login(
     @Body() body: LoginRequestDto,
   ): Promise<Observable<LoginResponse>> {

@@ -38,7 +38,7 @@ export class AuthService {
 
     this.client.emit('user_created', auth);
 
-    return { status: HttpStatus.CREATED, error: null };
+    return { status: HttpStatus.OK, error: null };
   }
 
   public async login({

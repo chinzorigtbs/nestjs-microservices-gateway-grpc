@@ -1,4 +1,5 @@
-import { UserRole, UserType } from './user.enum';
+import { UserRole } from './user.enum';
+import { Project } from './project.entity';
 export declare class User {
     id: string;
     firstName: string;
@@ -7,6 +8,6 @@ export declare class User {
     password: string;
     gender: string;
     phoneNumber: string;
-    type: UserType;
     role: UserRole;
+    projects: Project[];
 }

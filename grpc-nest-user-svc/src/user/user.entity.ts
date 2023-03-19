@@ -1,6 +1,7 @@
 import { Exclude } from 'class-transformer';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { UserRole, UserType } from './user.enum';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { UserRole } from './user.enum';
+import { Project } from './project.entity';
 
 @Entity()
 export class User {
@@ -26,9 +27,9 @@ export class User {
   @Column({ nullable: true })
   phoneNumber: string;
 
-  @Column({ type: 'enum', enum: UserType, default: UserType.SIGNED })
-  type: UserType;
-
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
   role: UserRole;
+
+  @OneToMany(() => Project, (project) => project.user)
+  projects: Project[];
 }
